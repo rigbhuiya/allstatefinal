@@ -8,7 +8,7 @@ export default class SignIn extends Component {
 
         super(props);
 
-        this.state={email: "", password: "", store: null}
+        this.state={username: "", password: "", store: null}
 
         this.responseGoogle=this.responseGoogle.bind(this);
      
@@ -17,14 +17,17 @@ export default class SignIn extends Component {
     
     responseGoogle(response){
          
-      if(response.profileObj.email!==null){
+      if(response.profileObj.username!==null){
         {this.props.GLogin(true)}
+        localStorage.setItem('login', JSON.stringify({
+          login: true
+        }))
       }
       else
       {
         {this.props.GLogin(false)}
       }
-   console.log(response.profileObj.email);
+   console.log(response.profileObj.username);
    
 }
 
@@ -37,7 +40,7 @@ export default class SignIn extends Component {
 
             <div className="form-group" >
               <label>Email address</label>
-              <input type="email" className="form-control" name="email" placeholder="Enter email" onChange={(e) => { this.setState( {email: e.target.value }) }} value={this.state.email} autoComplete />
+              <input type="email" className="form-control" name="email" placeholder="Enter email" onChange={(e) => { this.setState( {username: e.target.value }) }} value={this.state.username} autoComplete />
             </div>
 
             <div className="form-group">

@@ -11,7 +11,7 @@ function App() {
 
 
 
-  const [details, setDetails] = useState({ email: "", password: "", store: null });
+  const [details, setDetails] = useState({ username: "", password: "", store: null });
   const [log, setLog] = useState(false);
   useEffect(() => {
 
@@ -28,11 +28,13 @@ function App() {
 
     setDetails(user);
 
+    const request={ username: user.username, password:user.password}
+
     console.warn("Formdata", user)
     fetch('http://localhost:8085/authenticate', {
       method: "POST",
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(details)
+      body: JSON.stringify(request)
     }).then((resp) => {
       resp.json().then((result) => {
         console.warn(result)
