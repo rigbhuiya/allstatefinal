@@ -17,7 +17,7 @@ export default class SignIn extends Component {
     
     responseGoogle(response){
          
-      if(response.profileObj.username!==null){
+      if(response.profileObj.email!==null){
         {this.props.GLogin(true)}
         localStorage.setItem('login', JSON.stringify({
           login: true

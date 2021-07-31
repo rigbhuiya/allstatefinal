@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 
 export default class SignUp extends Component {
 
@@ -7,18 +7,27 @@ export default class SignUp extends Component {
 
         super(props);
 
-        this.state={firstName:"", lastName:"", emailId: "", password: "", cpassword: "",role:"user"}
+        this.state={firstName:"", lastName:"", emailId: "", password: "", cpassword: "",role:"user",redirect:null}
 
         this.handleRegistrationSubmit=this.handleRegistrationSubmit.bind(this);
 
         this.register=this.register.bind(this);
 
     }
-    handleRegistrationSubmit(){
+    handleRegistrationSubmit(e){
 
-        //e.preventDefault();
+        
+        if(this.state.password===this.state.cpassword){
+            this.register(this.state);
+            this.setState({redirect:"/"});
+        }
+        else{
+            e.preventDefault();
+            alert("Passwords did not match! Please retry!");
 
-        this.register(this.state);
+            this.setState({password: "", cpassword: ""});
+        }
+        
 
         console.log(this.state)
 
@@ -48,8 +57,11 @@ export default class SignUp extends Component {
 
 
     render() {
+        if (this.state.redirect) {
+            return <Redirect to={this.state.redirect} />
+          }
         return (<div>
-                <form onSubmit={()=>this.handleRegistrationSubmit()}>
+                <form onSubmit={(e)=>this.handleRegistrationSubmit(e)}>
                 <h3>Sign Up</h3>
 
                 <div className="form-group">
@@ -89,7 +101,6 @@ export default class SignUp extends Component {
                 <div className="forgot-password text-right">
                     Already registered <Link to="/"> sign in?</Link>
                 </div>
-                
             </form>
             </div>
 
