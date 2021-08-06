@@ -19,9 +19,11 @@ export default class SignIn extends Component {
          
       if(response.profileObj.email!==null){
         {this.props.GLogin(true)}
-        localStorage.setItem('login', JSON.stringify({
-          login: true
-        }))
+        // localStorage.setItem('login', JSON.stringify({
+        //   login: true,
+        //   role:"ROLE_USER"
+        // }))
+        console.warn("response google true","response google true")
       }
       else
       {
@@ -56,20 +58,20 @@ export default class SignIn extends Component {
             </div>
 
             <button type="submit" className="btn btn-primary btn-block">Submit</button>
-            <GoogleLogin
+            {/* <GoogleLogin
                         clientId="335922090078-0boac3pbnvc05ecjiquskd9lvo2fnh1t.apps.googleusercontent.com"
                         buttonText="Login with Google"
                         //theme="dark"
                         onSuccess={this.responseGoogle}
                         onFailure={this.responseGoogle}
                         cookiePolicy={'single_host_origin'}
-                    />
+                    /> */}
             <div className="logged-in ">
               <div className="text-left">
              <Link to="sign-up">Sign Up</Link>
             </div>
             <div className="forgot-password text-right">
-             <Link> Forgot password?</Link>
+             <Link to="forgot-password"> Forgot password?</Link>
             </div>
             </div>
           </form>

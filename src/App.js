@@ -1,11 +1,13 @@
 import './App.css';
 import NavBar from './components/navbar'
 import SideBar from './components/sidebar'
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route, Link, Redirect } from "react-router-dom";
 import React, { useState,useEffect } from 'react';
 import Homepage from './components/pages/homepage';
 import SignUp from './components/pages/signup';
 import SignIn from './components/pages/signin';
+import ForgotPassword from './components/pages/forgotpassword';
+import UserList from './components/userlist';
 
 function App() {
 
@@ -43,10 +45,18 @@ function App() {
         if (result.jwt != null) {
           localStorage.setItem('login', JSON.stringify({
             login: true,
-            token: result.jwt
-          }))
+            token: result.jwt,
+            role: result.authority[0].authority
+            
+          }
+          ))
+
+
           setLog(true)
           console.log("Login jwt set to " + log)
+        }
+        else{
+          alert("Wrong credentials")
         }
 
         console.warn("Formdata login update", details)
@@ -59,7 +69,14 @@ function App() {
   }
   function gLogin(flag){
     if(flag==true)
+    {
     setLog(true)
+    localStorage.setItem('login', JSON.stringify({
+      login: true,
+      role:"ROLE_USER"
+    }))
+    console.warn("gLogin","gLogin")
+    }
     else
     setLog(false)
 
@@ -72,6 +89,7 @@ function App() {
   }
 
   return (
+
     <div>
       {!(log) ? 
       <div>
@@ -83,6 +101,7 @@ function App() {
             <Route exact path='/' exact component={() =><SignIn Login={login} GLogin={gLogin} />} />
             <Route path="/sign-in" exact component={() =><SignIn Login={login} GLogin={gLogin} />}/>
             <Route path="/sign-up" exact component={SignUp} />
+            <Route path="/forgot-password" exact component={ForgotPassword} />
           </Switch>
         </div>
       </div>
@@ -97,8 +116,12 @@ function App() {
                 <NavBar Logout={Logout}></NavBar>
                 <div className="logged-in">
                   <SideBar></SideBar>
-                  <Homepage></Homepage>
-                </div></div>
+                  <div className="view">
+                  <Route exact path='/' exact component={Homepage} />
+                  <Route exact path='/userlist' exact component={UserList} />
+                  </div>
+                </div>
+                </div>
             </Switch>
           </Router>
 

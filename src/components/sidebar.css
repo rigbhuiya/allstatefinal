@@ -3,6 +3,9 @@ body {
 }
 .sidenav {
   /* margin-top: 60px; */
+  /* display: contents; */
+  display: flow-root;
+  padding: 0;
   height: 100%;
   width: 20%;
 
@@ -11,7 +14,6 @@ body {
   left: 0;
   background-color: lightblue;
   overflow-x: hidden;
-  padding-top: 20px;
 }
 .heading a:hover {
   color: white;

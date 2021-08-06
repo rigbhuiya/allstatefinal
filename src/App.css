@@ -123,3 +123,7 @@ html,
 .forgot-password a {
   color: #167bff;
 }
+
+.view {
+  display: contents;
+}
