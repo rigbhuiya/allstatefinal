@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Link, Redirect } from "react-router-dom";
-import axios from "axios";
+import { postAPI } from "../../services/commonService";
 
 export default class SignUp extends Component {
   constructor(props) {
@@ -18,32 +18,21 @@ export default class SignUp extends Component {
 
     this.handleRegistrationSubmit = this.handleRegistrationSubmit.bind(this);
 
-    this.register = this.register.bind(this);
   }
-  handleRegistrationSubmit(e) {
+ async handleRegistrationSubmit(e) {
+   e.preventDefault()
     if (this.state.password === this.state.cpassword) {
-      this.register(this.state);
-      this.setState({ redirect: "/" });
+      const url = `signUp`;
+      const data = this.state;
+      const response=await postAPI(url, data);
+      if(response){
+        this.setState({ redirect: "/" });
+      }
     } else {
       e.preventDefault();
       alert("Passwords did not match! Please retry!");
-
       this.setState({ password: "", cpassword: "" });
     }
-
-    console.log(this.state);
-  }
-  register() {
-    axios({
-      url: "http://backend-registration.169.50.202.75.nip.io/user/register",
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      data: JSON.stringify(this.state),
-    }).then((response) => {
-      console.log(response);
-    });
   }
 
   render() {

@@ -28,6 +28,10 @@ export default class SignIn extends Component {
     }
     console.log(response.profileObj.username);
   }
+  componentDidMount(){
+    const BASE_URL = process.env.REACT_APP_BASE_API_URL;
+    console.log(BASE_URL);
+  }
 
   render() {
     return (

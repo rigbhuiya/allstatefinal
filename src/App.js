@@ -8,7 +8,7 @@ import SignUp from './components/pages/signup';
 import SignIn from './components/pages/signin';
 import ForgotPassword from './components/pages/forgotpassword';
 import UserList from './components/userlist';
-import axios from 'axios'
+import { postAPI } from './services/commonService';
 function App() {
   const [details, setDetails] = useState({ username: "", password: "", store: null });
   const [log, setLog] = useState(false);
@@ -23,17 +23,21 @@ function App() {
 
   }, [log])
 
-  function login(user) {
+  async function  login(user) {
     setDetails(user);
-    const request={ username: user.username, password:user.password}
-      axios({
-        url: "http://backend-login-JWT.169.50.202.75.nip.io/authenticate",
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        data: JSON.stringify(request),
-      }).then((result) => {
+    const request={ emailID: user.username, password:user.password}
+    const url = `login`;
+    const result=await postAPI(url, request);
+    console.log("result",result);
+
+      // axios({
+      //   url: `${API_URL}/authenticate`,
+      //   method: "POST",
+      //   headers: {
+      //     "Content-Type": "application/json",
+      //   },
+      //   data: JSON.stringify(request),
+      // }).then((result) => {
         const {data}=result
         console.warn(result)
         if (data.jwt != null) {
@@ -49,9 +53,8 @@ function App() {
         else{
           alert("Wrong credentials")
         }
-
         console.warn("Formdata login update", details)
-      })
+      // })
   }
 
   function gLogin(flag){
